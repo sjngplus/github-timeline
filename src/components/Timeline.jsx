@@ -24,25 +24,27 @@ const Timeline = () => {
       setRepos(responseDataArray);
     })
     .catch(err => console.log(err));
-  }, [gitHubUserName])  
+  }, [gitHubUserName]) 
   
   
   const parsedReposList = repos.map(repo => {
-    const parsedRepoName = repo.full_name.replace(`${gitHubUserName}/`, "");
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const parsedRepoDate = new Date(repo.created_at).toLocaleDateString("en-US", dateOptions);
     return  (
       <VerticalTimelineElement
-      className="vertical-timeline-element--work"
+        key={repo.id}
+        className="vertical-timeline-element"
         contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
         contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
         date="2011 - present"
-        iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-        icon={<BsGithub />}
+        iconStyle={{ background: 'grey', color: '#fff', }}
+        icon={<BsGithub />}       
       >
-        <h3 className="vertical-timeline-element-title">{parsedRepoName}</h3>
+      <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
+        <h3 className="vertical-timeline-element-title">{repo.name}</h3>
         <h5 className="vertical-timeline-element-subtitle">{parsedRepoDate}</h5>
         <p>{repo.language ? repo.language : "n/a"}</p>
+      </a>
       </VerticalTimelineElement>
     )
   })
