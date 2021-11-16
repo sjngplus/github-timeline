@@ -1,8 +1,9 @@
-import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
-import 'react-vertical-timeline-component/style.min.css';
-import { BsGithub } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
+import "./VerticalTimeline.css"
+import { BsGithub } from 'react-icons/bs';
 
 const Timeline = () => {
 
@@ -41,16 +42,14 @@ const Timeline = () => {
       >
         <h3 className="vertical-timeline-element-title">{parsedRepoName}</h3>
         <h5 className="vertical-timeline-element-subtitle">{parsedRepoDate}</h5>
-        <p>
-          Creative Direction, User Experience, Visual Design, Project Management, Team Leading
-        </p>
+        <p>{repo.language ? repo.language : "n/a"}</p>
       </VerticalTimelineElement>
     )
   })
 
 
   return (
-    <VerticalTimeline>
+    <VerticalTimeline className="vertical-timeline vertical-timeline--animate vertical-timeline--two-columns">
       {parsedReposList}
     </VerticalTimeline>
   )
