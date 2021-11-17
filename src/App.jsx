@@ -1,4 +1,3 @@
-import './App.scss';
 import Timeline from './components/Timeline';
 import Header from './components/Header';
 

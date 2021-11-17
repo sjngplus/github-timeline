@@ -63,14 +63,13 @@ const Timeline = () => {
         className="vertical-timeline-element"
         contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
         contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
-        date="2011 - present"
+        date={parsedRepoDate}
         iconStyle={{ background: `${iconLogoColor(repo.language)}`, color: '#fff', }}
         icon={iconLogo(repo.language)}       
       >
-      <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
+      <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="vertical-timeline-element-body" style={{color: "inherit", textDecoration: "inherit"}}>
         <h3 className="vertical-timeline-element-title">{repo.name}</h3>
-        <h5 className="vertical-timeline-element-subtitle">{parsedRepoDate}</h5>
-        <p>{repo.language ? repo.language : "n/a"}</p>
+        <h5 className="vertical-timeline-element-subtitle">{repo.language ? repo.language : "n/a"}</h5>        
       </a>
       </VerticalTimelineElement>
     )
