@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import "./VerticalTimeline.scss"
+import "./Timeline.scss"
 import { BsGithub } from 'react-icons/bs';
 import { DiRuby } from 'react-icons/di';
 import { ImEmbed2 } from 'react-icons/im';
@@ -61,13 +61,13 @@ const Timeline = () => {
       <VerticalTimelineElement
         key={repo.id}
         className="vertical-timeline-element"
-        contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-        contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
+        contentStyle={{ background: 'white', color: 'black', borderTop: `solid ${iconLogoColor(repo.language)} 5px` }}
+        contentArrowStyle={{ borderRight: `7px solid  ${iconLogoColor(repo.language)}` }}
         date={parsedRepoDate}
         iconStyle={{ background: `${iconLogoColor(repo.language)}`, color: '#fff', }}
         icon={iconLogo(repo.language)}       
       >
-      <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="vertical-timeline-element-body" style={{color: "inherit", textDecoration: "inherit"}}>
+      <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
         <h3 className="vertical-timeline-element-title">{repo.name}</h3>
         <h5 className="vertical-timeline-element-subtitle">{repo.language ? repo.language : "n/a"}</h5>        
       </a>

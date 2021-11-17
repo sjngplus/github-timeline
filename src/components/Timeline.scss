@@ -5,7 +5,7 @@
   left: 18px;
   height: 100%;
   width: 4px;
-  background: gray;
+  background: white;
 }
 
 .vertical-timeline {
@@ -14,6 +14,8 @@
 
 .vertical-timeline-element-date {
   color: black;
+  font-size: large;
+  font-weight: bold;
 }
 
 .vertical-timeline-element-title, .vertical-timeline-element-subtitle {
