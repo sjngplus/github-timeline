@@ -5,6 +5,7 @@ import 'react-vertical-timeline-component/style.min.css';
 import "./VerticalTimeline.scss"
 import { BsGithub } from 'react-icons/bs';
 import { DiRuby } from 'react-icons/di';
+import { ImEmbed2 } from 'react-icons/im';
 import { IoLogoJavascript, IoLogoHtml5, IoLogoPython } from 'react-icons/io';
 
 const Timeline = () => {
@@ -13,7 +14,7 @@ const Timeline = () => {
   const gitHubUserName = "sjngplus";
   
   useEffect(() => {
-    const url = `https://api.github.com/users/${gitHubUserName}/repos`;
+    const url = `https://api.github.com/users/${gitHubUserName}/repos?per_page=100`;
     console.log("##Fetching data from API##");
     axios.get(url)
     .then(res => {
@@ -32,6 +33,7 @@ const Timeline = () => {
     const icons = {
       "JavaScript": <IoLogoJavascript />,
       "HTML": <IoLogoHtml5 />,
+      "EJS": <ImEmbed2 />,
       "Ruby": <DiRuby />,
       "Python": <IoLogoPython />,
       "default": <BsGithub />
