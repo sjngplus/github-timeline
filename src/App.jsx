@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Timeline from './components/Timeline';
 import Header from './components/Header';
+import Alert from '@mui/material/Alert';
 
 function App() {  
 
@@ -19,7 +20,7 @@ function App() {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
-      <Timeline githubName={githubName}/>
+      {githubName ? <Timeline githubName={githubName}/> : <Alert severity="info" style={{margin: '20px'}}>Enter a Github username and click search.</Alert>}
     </div>
   );
 }

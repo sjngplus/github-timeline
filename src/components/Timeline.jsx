@@ -10,61 +10,9 @@ import { IoLogoJavascript, IoLogoHtml5, IoLogoPython } from 'react-icons/io';
 import Alert from '@mui/material/Alert';
 
 const Timeline = (props) => {
-
-  const [ repos, setRepos] = useState();
-  const [ parsedPageDisplay, setParsedPageDisplay] = useState(<Alert severity="info" style={{position: "absolute"}}>Enter a Github username and click search.</Alert>);  
- 
-  const parsingReceivedRepoData = (inputArray) => {
-
-    const outputArray = inputArray.map(repo => {
-      const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-      const parsedRepoDate = new Date(repo.created_at).toLocaleDateString("en-US", dateOptions);
-      const repoColor = colorPicker(repo.language);
-      
-      return  (
-        <VerticalTimelineElement
-          key={repo.id}
-          className="vertical-timeline-element"
-          contentStyle={{ background: 'white', color: 'black', borderTop: `solid ${repoColor} 6px` }}
-          contentArrowStyle={{ borderRight: `7px solid  ${repoColor}` }}
-          date={parsedRepoDate}
-          iconStyle={{ background: `${repoColor}`, color: '#fff', }}
-          icon={iconLogo(repo.language)}       
-        >
-        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
-          <h3 className="vertical-timeline-element-title">{repo.name}</h3>
-          <h5 className="vertical-timeline-element-subtitle">{repo.language ? repo.language : "n/a"}</h5>        
-        </a>
-        </VerticalTimelineElement>
-      )
-    });
-    return outputArray;
-
-  };
-
-  useEffect(() => {
-    // if (props.githubName) {
-
-      const url = `https://api.github.com/users/${props.githubName}/repos?per_page=100`;
-      console.log("##Fetching data from API##");
-      axios.get(url)
-      .then(res => {
-        const responseDataArray = res.data;
-        responseDataArray.sort((a, b) => {
-          if (a.created_at < b.created_at) return -1;
-          if (a.created_at > b.created_at) return 1;
-          return 0;      
-        });
-        setParsedPageDisplay(parsingReceivedRepoData(responseDataArray));
-      })
-      .catch(err => {
-        console.log(err)
-        setParsedPageDisplay(<Alert severity="warning" style={{position: "absolute"}}>Invalid Github username!</Alert>);
-      });
-
-    // }
-  }, [props.githubName])
   
+  const [ parsedPageDisplay, setParsedPageDisplay] = useState();
+
   const iconLogo = (language) => {
     const icons = {
       "JavaScript": <IoLogoJavascript />,
@@ -88,38 +36,60 @@ const Timeline = (props) => {
     }
     return color[language] || color.default;
   };  
-  
+ 
+  const parsingReceivedRepoData = (inputArray) => {
 
-  // if (repos) {
+    const outputArray = inputArray.map(repo => {
+      const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+      const parsedRepoDate = new Date(repo.created_at).toLocaleDateString("en-US", dateOptions);
+      const repoColor = colorPicker(repo.language);      
+      return  (
+        <VerticalTimelineElement
+          key={repo.id}
+          className="vertical-timeline-element"
+          contentStyle={{ background: 'white', color: 'black', borderTop: `solid ${repoColor} 6px` }}
+          contentArrowStyle={{ borderRight: `7px solid  ${repoColor}` }}
+          date={parsedRepoDate}
+          iconStyle={{ background: `${repoColor}`, color: '#fff', }}
+          icon={iconLogo(repo.language)}       
+        >
+        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
+          <h3 className="vertical-timeline-element-title">{repo.name}</h3>
+          <h5 className="vertical-timeline-element-subtitle">{repo.language ? repo.language : "n/a"}</h5>        
+        </a>
+        </VerticalTimelineElement>
+      )
+    });
+    return outputArray;
 
-  //   parsedPageDisplay = repos.map(repo => {
-  //     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  //     const parsedRepoDate = new Date(repo.created_at).toLocaleDateString("en-US", dateOptions);
-  //     const repoColor = colorPicker(repo.language);
-      
-  //     return  (
-  //       <VerticalTimelineElement
-  //         key={repo.id}
-  //         className="vertical-timeline-element"
-  //         contentStyle={{ background: 'white', color: 'black', borderTop: `solid ${repoColor} 6px` }}
-  //         contentArrowStyle={{ borderRight: `7px solid  ${repoColor}` }}
-  //         date={parsedRepoDate}
-  //         iconStyle={{ background: `${repoColor}`, color: '#fff', }}
-  //         icon={iconLogo(repo.language)}       
-  //       >
-  //       <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
-  //         <h3 className="vertical-timeline-element-title">{repo.name}</h3>
-  //         <h5 className="vertical-timeline-element-subtitle">{repo.language ? repo.language : "n/a"}</h5>        
-  //       </a>
-  //       </VerticalTimelineElement>
-  //     )
-  //   })
+  };
 
-  // }  
+  useEffect(() => {
+    if (props.githubName) {
+
+      const url = `https://api.github.com/users/${props.githubName}/repos?per_page=100`;
+      console.log("##Fetching data from API##");
+      axios.get(url)
+      .then(res => {
+        const responseDataArray = res.data;
+        responseDataArray.sort((a, b) => {
+          if (a.created_at < b.created_at) return -1;
+          if (a.created_at > b.created_at) return 1;
+          return 0;      
+        });
+        setParsedPageDisplay(parsingReceivedRepoData(responseDataArray));
+      })
+      .catch(err => {
+        console.log(err)
+        setParsedPageDisplay(<Alert severity="warning" style={{position: "absolute"}}>Invalid Github username!</Alert>);
+      });
+
+    }
+  }, [props.githubName]) 
 
 
   return (
-    <VerticalTimeline className="vertical-timeline vertical-timeline--animate vertical-timeline--two-columns">
+    <VerticalTimeline className="vertical-timeline">
       {parsedPageDisplay}
     </VerticalTimeline>
   )
