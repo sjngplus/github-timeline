@@ -40,6 +40,18 @@ const Timeline = () => {
     }
     return icons[language] || icons.default;
   };
+
+  const iconLogoColor = (language) => {
+    const icons = {
+      "JavaScript": "gold",
+      "HTML": "orange",
+      "EJS": "pink",
+      "Ruby": "red",
+      "Python": "royalblue",
+      "default": "grey"
+    }
+    return icons[language] || icons.default;
+  };
   
   const parsedReposList = repos.map(repo => {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -52,7 +64,7 @@ const Timeline = () => {
         contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
         contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
         date="2011 - present"
-        iconStyle={{ background: 'grey', color: '#fff', }}
+        iconStyle={{ background: `${iconLogoColor(repo.language)}`, color: '#fff', }}
         icon={iconLogo(repo.language)}       
       >
       <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
