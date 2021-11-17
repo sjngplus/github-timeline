@@ -72,6 +72,7 @@ const Timeline = (props) => {
       console.log("##Fetching data from API##");
       axios.get(url)
       .then(res => {
+        if (!res.data.length) props.setNoData(true);
         const responseDataArray = res.data;
         responseDataArray.sort((a, b) => {
           if (a.created_at < b.created_at) return -1;
