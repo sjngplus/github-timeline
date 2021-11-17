@@ -8,13 +8,13 @@ import { DiRuby } from 'react-icons/di';
 import { ImEmbed2 } from 'react-icons/im';
 import { IoLogoJavascript, IoLogoHtml5, IoLogoPython } from 'react-icons/io';
 
-const Timeline = () => {
+const Timeline = (props) => {
 
   const [ repos, setRepos] = useState([]);
-  const gitHubUserName = "sjngplus";
+  const githubUserName = props.githubName;
   
   useEffect(() => {
-    const url = `https://api.github.com/users/${gitHubUserName}/repos?per_page=100`;
+    const url = `https://api.github.com/users/${githubUserName}/repos?per_page=100`;
     console.log("##Fetching data from API##");
     axios.get(url)
     .then(res => {
@@ -27,7 +27,7 @@ const Timeline = () => {
       setRepos(responseDataArray);
     })
     .catch(err => console.log(err));
-  }, [gitHubUserName]) 
+  }, [githubUserName])
   
   const iconLogo = (language) => {
     const icons = {
