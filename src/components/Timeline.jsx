@@ -41,30 +41,31 @@ const Timeline = () => {
     return icons[language] || icons.default;
   };
 
-  const iconLogoColor = (language) => {
-    const icons = {
+  const colorPicker = (language) => {
+    const color = {
       "JavaScript": "gold",
       "HTML": "orange",
       "EJS": "pink",
       "Ruby": "red",
       "Python": "royalblue",
-      "default": "grey"
+      "default": "slateGray"
     }
-    return icons[language] || icons.default;
+    return color[language] || color.default;
   };
   
   const parsedReposList = repos.map(repo => {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const parsedRepoDate = new Date(repo.created_at).toLocaleDateString("en-US", dateOptions);
+    const repoColor = colorPicker(repo.language);
     
     return  (
       <VerticalTimelineElement
         key={repo.id}
         className="vertical-timeline-element"
-        contentStyle={{ background: 'white', color: 'black', borderTop: `solid ${iconLogoColor(repo.language)} 5px` }}
-        contentArrowStyle={{ borderRight: `7px solid  ${iconLogoColor(repo.language)}` }}
+        contentStyle={{ background: 'white', color: 'black', borderTop: `solid ${repoColor} 6px` }}
+        contentArrowStyle={{ borderRight: `7px solid  ${repoColor}` }}
         date={parsedRepoDate}
-        iconStyle={{ background: `${iconLogoColor(repo.language)}`, color: '#fff', }}
+        iconStyle={{ background: `${repoColor}`, color: '#fff', }}
         icon={iconLogo(repo.language)}       
       >
       <a href={repo.html_url} target="_blank" rel="noopener noreferrer" style={{color: "inherit", textDecoration: "inherit"}}>
