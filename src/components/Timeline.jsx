@@ -64,10 +64,11 @@ const Timeline = (props) => {
 
   };
 
+  const userNameToFetch = props.githubName;
   useEffect(() => {
-    if (props.githubName) {
+    if (userNameToFetch) {
 
-      const url = `https://api.github.com/users/${props.githubName}/repos?per_page=100`;
+      const url = `https://api.github.com/users/${userNameToFetch}/repos?per_page=100`;
       console.log("##Fetching data from API##");
       axios.get(url)
       .then(res => {
@@ -78,14 +79,15 @@ const Timeline = (props) => {
           return 0;      
         });
         setParsedPageDisplay(parsingReceivedRepoData(responseDataArray));
+        props.setLoading(false);
       })
       .catch(err => {
         console.log(err)
-        setParsedPageDisplay(<Alert severity="warning" style={{position: "absolute"}}>Invalid Github username!</Alert>);
+        setParsedPageDisplay(<Alert severity="warning" style={{position: "absolute"}}>Could not fetch data. Please try again.</Alert>);
       });
 
     }
-  }, [props.githubName]) 
+  }, [userNameToFetch])
 
 
   return (
