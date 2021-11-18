@@ -11,7 +11,7 @@ function App() {
   const [ isLoading, setIsLoading ] = useState(false);
   const [ noData, setNoData ] = useState(false);
 
-  const searchBtnClick = () => {
+  const searchBtnClick = () => {    
     if (searchValue) {
       setNoData(false);
       setIsLoading(true);

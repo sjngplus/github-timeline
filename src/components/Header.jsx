@@ -18,7 +18,13 @@ const Header = (props) => {
           sx={{ ml: 1, flex: 1 }}          
           placeholder="Enter Github username"
           value={props.searchValue}
-          onChange={e => props.setSearchValue(e.target.value)}
+          onChange={e => props.setSearchValue(e.target.value)}         
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              e.preventDefault() 
+              props.handleClick()
+            };
+          }}
         />
         <IconButton onClick={props.handleClick} sx={{ p: '10px' }} >
           <SearchIcon />
