@@ -11,7 +11,7 @@ import Alert from '@mui/material/Alert';
 
 const Timeline = (props) => {
   
-  const [ parsedPageDisplay, setParsedPageDisplay] = useState();
+  const [ parsedPageDisplay, setParsedPageDisplay] = useState("");
 
   const iconLogo = (language) => {
     const icons = {
@@ -66,11 +66,12 @@ const Timeline = (props) => {
 
   const userNameToFetch = props.githubName;
   useEffect(() => {
+    const cancelTokenSource = axios.CancelToken.source();    
     if (userNameToFetch) {
 
       const url = `https://api.github.com/users/${userNameToFetch}/repos?per_page=100`;
       console.log("##Fetching data from API##");
-      axios.get(url)
+      axios.get(url, {cancelToken: cancelTokenSource.token})      
       .then(res => {
         if (!res.data.length) props.setNoData(true);
         const responseDataArray = res.data;
@@ -84,10 +85,12 @@ const Timeline = (props) => {
       })
       .catch(err => {
         console.log(err)
-        setParsedPageDisplay(<Alert severity="warning" style={{position: "absolute"}}>Could not fetch data. Please try again.</Alert>);
+        setParsedPageDisplay(<Alert severity="warning" >Could not fetch data. Please try another username.</Alert>);
+        props.setLoading(false);
       });
 
     }
+    return () => {cancelTokenSource.cancel()};
   }, [userNameToFetch])
 
 
