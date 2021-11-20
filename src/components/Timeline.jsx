@@ -6,6 +6,7 @@ import "./Timeline.scss"
 import { BsGithub } from 'react-icons/bs';
 import { DiRuby } from 'react-icons/di';
 import { ImEmbed2 } from 'react-icons/im';
+import { SiCloudera } from 'react-icons/si';
 import { IoLogoJavascript, IoLogoHtml5, IoLogoPython } from 'react-icons/io';
 import Alert from '@mui/material/Alert';
 
@@ -20,6 +21,7 @@ const Timeline = (props) => {
       "EJS": <ImEmbed2 />,
       "Ruby": <DiRuby />,
       "Python": <IoLogoPython />,
+      "C": <SiCloudera />,
       "default": <BsGithub />
     }
     return icons[language] || icons.default;
@@ -32,6 +34,7 @@ const Timeline = (props) => {
       "EJS": "pink",
       "Ruby": "red",
       "Python": "royalblue",
+      "C": "cornflowerBlue",
       "default": "slateGray"
     }
     return color[language] || color.default;
